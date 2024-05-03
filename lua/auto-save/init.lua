@@ -118,13 +118,17 @@ function M.save(buf)
     end
 end
 
-local save_func = (
-    cnf.opts.debounce_delay > 0 and debounce(M.save, cnf.opts.debounce_delay) or M.save
-)
+local function save_func()
+    if cnf.opts.debounce_delay > 0 then
+        return debounce(M.save, cnf.opts.debounce_delay)
+    else
+        return M.save
+    end
+end
 
 local function perform_save()
     g.auto_save_abort = false
-    save_func()
+    save_func()()
 end
 
 function M.on()
