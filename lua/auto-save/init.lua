@@ -119,7 +119,9 @@ function M.save(buf)
 end
 
 local save_func = (
-    cnf.opts.debounce_delay > 0 and debounce(M.save, cnf.opts.debounce_delay) or M.save
+    (cnf.opts.save_delay > 0 and debounce(M.save, cnf.opts.save_delay))
+    or (cnf.opts.debounce_delay > 0 and debounce(M.save, cnf.opts.debounce_delay))
+    or M.save
 )
 
 local function perform_save()
